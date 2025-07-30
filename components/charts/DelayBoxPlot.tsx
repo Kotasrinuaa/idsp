@@ -1,8 +1,26 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 import { IDSPRecord } from '@/utils/idspUtils';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface DelayBoxPlotProps {
   data: IDSPRecord[];
@@ -37,6 +55,86 @@ export function DelayBoxPlot({ data, title, description }: DelayBoxPlotProps) {
     };
   }).sort((a, b) => b.avgDelay - a.avgDelay);
 
+  const chartConfig = {
+    labels: chartData.slice(0, 8).map(item => item.disease),
+    datasets: [
+      {
+        label: 'Average Delay (days)',
+        data: chartData.slice(0, 8).map(item => item.avgDelay),
+        backgroundColor: '#ffa500',
+        borderColor: '#ffa500',
+        borderWidth: 1,
+        borderRadius: 4,
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        backgroundColor: '#1f2937',
+        titleColor: '#9ca3af',
+        bodyColor: '#ffffff',
+        borderColor: '#374151',
+        borderWidth: 1,
+        cornerRadius: 8,
+        displayColors: false,
+        callbacks: {
+          afterBody: function(context: any) {
+            const dataIndex = context[0].dataIndex;
+            const data = chartData[dataIndex];
+            return [
+              `Range: ${data.minDelay} - ${data.maxDelay} days`,
+              `Reports: ${data.count}`
+            ];
+          }
+        }
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          color: '#374151',
+          drawBorder: false,
+        },
+        ticks: {
+          color: '#9ca3af',
+          font: {
+            size: 12,
+          },
+        },
+      },
+      y: {
+        grid: {
+          color: '#374151',
+          drawBorder: false,
+        },
+        ticks: {
+          color: '#9ca3af',
+          font: {
+            size: 12,
+          },
+          callback: function(value: any) {
+            return value + 'd';
+          }
+        },
+        title: {
+          display: true,
+          text: 'Days',
+          color: '#9ca3af',
+          font: {
+            size: 12,
+          },
+        },
+      },
+    },
+  };
+
   return (
     <Card className="col-span-4 border-neon-cyan/20 bg-gray-900/50 backdrop-blur-sm">
       <CardHeader>
@@ -44,76 +142,9 @@ export function DelayBoxPlot({ data, title, description }: DelayBoxPlotProps) {
         {description && <CardDescription className="text-gray-400">{description}</CardDescription>}
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={chartData.slice(0, 8)}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis 
-              dataKey="disease"
-              fontSize={12}
-              tickLine={false}
-              axisLine={false}
-              angle={-45}
-              textAnchor="end"
-              height={80}
-              tick={{ fill: '#9CA3AF' }}
-            />
-            <YAxis
-              fontSize={12}
-              tickLine={false}
-              axisLine={false}
-              tickFormatter={(value) => `${value}d`}
-              label={{ value: 'Days', angle: -90, position: 'insideLeft' }}
-              tick={{ fill: '#9CA3AF' }}
-            />
-            <Tooltip 
-              content={({ active, payload, label }) => {
-                if (active && payload && payload.length) {
-                  const data = payload[0].payload;
-                  return (
-                    <div className="rounded-lg border border-gray-600 bg-gray-800 p-2 shadow-sm">
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="flex flex-col">
-                          <span className="text-[0.70rem] uppercase text-gray-400">
-                            Disease
-                          </span>
-                          <span className="font-bold text-white">
-                            {label}
-                          </span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[0.70rem] uppercase text-gray-400">
-                            Avg Delay
-                          </span>
-                          <span className="font-bold" style={{ color: payload[0].color }}>
-                            {data.avgDelay} days
-                          </span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[0.70rem] uppercase text-gray-400">
-                            Range
-                          </span>
-                          <span className="font-bold text-white">
-                            {data.minDelay} - {data.maxDelay} days
-                          </span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[0.70rem] uppercase text-gray-400">
-                            Reports
-                          </span>
-                          <span className="font-bold text-white">
-                            {data.count}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
-            <Bar dataKey="avgDelay" fill="#ffa500" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+        <div style={{ height: 350 }}>
+          <Bar data={chartConfig} options={options} />
+        </div>
       </CardContent>
     </Card>
   );

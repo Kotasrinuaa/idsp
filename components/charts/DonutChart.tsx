@@ -1,7 +1,19 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend
+);
 
 interface DonutChartProps {
   data: any[];
@@ -27,6 +39,69 @@ const COLORS = [
 export function DonutChart({ data, title, description, dataKey, nameKey }: DonutChartProps) {
   const chartData = data.slice(0, 8); // Limit to top 8 for better visualization
 
+  const chartConfig = {
+    labels: chartData.map(item => item[nameKey]),
+    datasets: [
+      {
+        data: chartData.map(item => item[dataKey]),
+        backgroundColor: COLORS.slice(0, chartData.length),
+        borderColor: COLORS.slice(0, chartData.length),
+        borderWidth: 2,
+        cutout: '60%',
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom' as const,
+        labels: {
+          color: '#ffffff',
+          font: {
+            size: 12,
+          },
+          generateLabels: function(chart: any) {
+            const data = chart.data;
+            if (data.labels.length && data.datasets.length) {
+              return data.labels.map((label: string, i: number) => {
+                const value = data.datasets[0].data[i];
+                const displayLabel = label.length > 15 ? `${label.substring(0, 15)}...` : label;
+                return {
+                  text: displayLabel,
+                  fillStyle: data.datasets[0].backgroundColor[i],
+                  strokeStyle: data.datasets[0].backgroundColor[i],
+                  lineWidth: 0,
+                  hidden: false,
+                  index: i,
+                };
+              });
+            }
+            return [];
+          },
+        },
+      },
+      tooltip: {
+        backgroundColor: '#1f2937',
+        titleColor: '#9ca3af',
+        bodyColor: '#ffffff',
+        borderColor: '#374151',
+        borderWidth: 1,
+        cornerRadius: 8,
+        displayColors: true,
+        callbacks: {
+          label: function(context: any) {
+            const label = context.label || '';
+            const value = context.parsed;
+            return `${label}: ${value}`;
+          }
+        }
+      },
+    },
+  };
+
   return (
     <Card className="col-span-3 border-neon-cyan/20 bg-gray-900/50 backdrop-blur-sm">
       <CardHeader>
@@ -34,60 +109,9 @@ export function DonutChart({ data, title, description, dataKey, nameKey }: Donut
         {description && <CardDescription className="text-gray-400">{description}</CardDescription>}
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={350}>
-          <PieChart>
-            <Pie
-              data={chartData}
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={120}
-              paddingAngle={2}
-              dataKey={dataKey}
-              nameKey={nameKey}
-            >
-              {chartData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip 
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  const data = payload[0].payload;
-                  return (
-                    <div className="rounded-lg border border-gray-600 bg-gray-800 p-2 shadow-sm">
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="flex flex-col">
-                          <span className="text-[0.70rem] uppercase text-gray-400">
-                            Disease
-                          </span>
-                          <span className="font-bold text-white">
-                            {data[nameKey]}
-                          </span>
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-[0.70rem] uppercase text-gray-400">
-                            Cases
-                          </span>
-                          <span className="font-bold" style={{ color: payload[0].color }}>
-                            {data[dataKey]}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
-            <Legend 
-              verticalAlign="bottom" 
-              height={36}
-              formatter={(value) => value.length > 15 ? `${value.substring(0, 15)}...` : value}
-              wrapperStyle={{ color: '#ffffff' }}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+        <div style={{ height: 350 }}>
+          <Doughnut data={chartConfig} options={options} />
+        </div>
       </CardContent>
     </Card>
   );

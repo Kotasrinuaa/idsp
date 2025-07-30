@@ -23,11 +23,11 @@ export const initialFilterState: FilterState = {
 };
 
 export function getFilterOptions(data: IDSPRecord[]) {
-  const years = [...new Set(data.map(d => d.year))].sort();
-  const states = [...new Set(data.map(d => d.state))].sort();
-  const districts = [...new Set(data.map(d => d.district))].sort();
-  const diseases = [...new Set(data.map(d => d.disease_illness_name))].sort();
-  const statuses = [...new Set(data.map(d => d.status))].sort();
+  const years = Array.from(new Set(data.map(d => d.year))).sort();
+  const states = Array.from(new Set(data.map(d => d.state))).sort();
+  const districts = Array.from(new Set(data.map(d => d.district))).sort();
+  const diseases = Array.from(new Set(data.map(d => d.disease_illness_name))).sort();
+  const statuses = Array.from(new Set(data.map(d => d.status))).sort();
   
   const maxCases = Math.max(...data.map(d => d.cases));
   const maxDeaths = Math.max(...data.map(d => d.deaths));
@@ -49,14 +49,14 @@ export function getFilterOptions(data: IDSPRecord[]) {
 
 export function getDistrictsByStates(data: IDSPRecord[], selectedStates: string[]): string[] {
   if (selectedStates.length === 0) {
-    return [...new Set(data.map(d => d.district))].sort();
+    return Array.from(new Set(data.map(d => d.district))).sort();
   }
   
-  return [...new Set(
+  return Array.from(new Set(
     data
       .filter(d => selectedStates.includes(d.state))
       .map(d => d.district)
-  )].sort();
+  )).sort();
 }
 
 export function applyFilters(data: IDSPRecord[], filters: FilterState): IDSPRecord[] {
