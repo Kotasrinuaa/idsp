@@ -1,0 +1,41 @@
+year,week,outbreak_starting_date,reporting_date,state,district,disease_illness_name,status,cases,deaths
+2023,1,2023-01-02,2023-01-05,Kerala,Thiruvananthapuram,Dengue,Active,45,2
+2023,1,2023-01-03,2023-01-06,Tamil Nadu,Chennai,Chickenpox,Active,23,0
+2023,2,2023-01-08,2023-01-12,Maharashtra,Mumbai,Diarrheal Disease,Active,67,1
+2023,2,2023-01-10,2023-01-13,Karnataka,Bangalore,Dengue,Active,34,1
+2023,3,2023-01-15,2023-01-18,West Bengal,Kolkata,Malaria,Active,28,0
+2023,3,2023-01-16,2023-01-20,Uttar Pradesh,Lucknow,Typhoid,Active,19,1
+2023,4,2023-01-22,2023-01-25,Bihar,Patna,Chickenpox,Active,41,2
+2023,4,2023-01-24,2023-01-28,Rajasthan,Jaipur,Dengue,Active,52,3
+2023,5,2023-01-29,2023-02-02,Gujarat,Ahmedabad,Diarrheal Disease,Active,38,0
+2023,5,2023-01-30,2023-02-03,Punjab,Chandigarh,Malaria,Active,15,0
+2023,6,2023-02-05,2023-02-09,Haryana,Gurgaon,Dengue,Active,29,1
+2023,6,2023-02-07,2023-02-11,Odisha,Bhubaneswar,Chickenpox,Active,33,1
+2023,7,2023-02-12,2023-02-16,Assam,Guwahati,Typhoid,Active,22,2
+2023,7,2023-02-14,2023-02-18,Madhya Pradesh,Bhopal,Dengue,Active,46,2
+2023,8,2023-02-19,2023-02-23,Telangana,Hyderabad,Diarrheal Disease,Active,55,1
+2023,8,2023-02-21,2023-02-25,Andhra Pradesh,Vijayawada,Malaria,Active,31,0
+2023,9,2023-02-26,2023-03-02,Jharkhand,Ranchi,Chickenpox,Active,27,1
+2023,9,2023-02-28,2023-03-04,Chhattisgarh,Raipur,Dengue,Active,39,2
+2023,10,2023-03-05,2023-03-09,Himachal Pradesh,Shimla,Typhoid,Active,18,0
+2023,10,2023-03-07,2023-03-11,Uttarakhand,Dehradun,Dengue,Active,25,1
+2023,11,2023-03-12,2023-03-16,Goa,Panaji,Diarrheal Disease,Active,12,0
+2023,11,2023-03-14,2023-03-18,Manipur,Imphal,Malaria,Active,16,0
+2023,12,2023-03-19,2023-03-23,Nagaland,Kohima,Chickenpox,Active,21,1
+2023,12,2023-03-21,2023-03-25,Mizoram,Aizawl,Dengue,Active,14,0
+2023,13,2023-03-26,2023-03-30,Tripura,Agartala,Typhoid,Active,19,1
+2023,13,2023-03-28,2023-04-01,Meghalaya,Shillong,Dengue,Active,23,1
+2023,14,2023-04-02,2023-04-06,Sikkim,Gangtok,Diarrheal Disease,Active,8,0
+2023,14,2023-04-04,2023-04-08,Arunachal Pradesh,Itanagar,Malaria,Active,11,0
+2023,15,2023-04-09,2023-04-13,Kerala,Kochi,Dengue,Active,58,3
+2023,15,2023-04-11,2023-04-15,Tamil Nadu,Coimbatore,Chickenpox,Active,35,1
+2023,16,2023-04-16,2023-04-20,Maharashtra,Pune,Diarrheal Disease,Active,72,2
+2023,16,2023-04-18,2023-04-22,Karnataka,Mysore,Dengue,Active,41,2
+2023,17,2023-04-23,2023-04-27,West Bengal,Howrah,Malaria,Active,36,1
+2023,17,2023-04-25,2023-04-29,Uttar Pradesh,Kanpur,Typhoid,Active,28,2
+2023,18,2023-04-30,2023-05-04,Bihar,Gaya,Chickenpox,Active,49,3
+2023,18,2023-05-02,2023-05-06,Rajasthan,Udaipur,Dengue,Active,63,4
+2023,19,2023-05-07,2023-05-11,Gujarat,Surat,Diarrheal Disease,Active,44,1
+2023,19,2023-05-09,2023-05-13,Punjab,Ludhiana,Malaria,Active,20,0
+2023,20,2023-05-14,2023-05-18,Haryana,Faridabad,Dengue,Active,37,2
+2023,20,2023-05-16,2023-05-20,Odisha,Cuttack,Chickenpox,Active,42,2
